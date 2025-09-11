@@ -3,10 +3,11 @@ const app = express();
 const pkg = require('body-parser');
 const mongodb = require ('./data/database');
 const { json } = pkg;
+const router = require('./routes');
 
 const port = process.env.PORT || 3000;
 app.use(json());
-app.use('/', require('./routes').router);
+app.use('/', router);
 
 mongodb.initDatabase()
   .then(() => {

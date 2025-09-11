@@ -1,9 +1,9 @@
-const { Router } = require('express');
-const router = Router();
-const contactsController =  require('../controllers/contacts');
+const express = require('express');
+const router = express.Router();
 
+router.use('/contacts', require('./contacts'));
+router.get('/', (req, res) => {
+    res.send('<h1>Welcome to the Contacts API</h1><p>Use the /contacts endpoint to manage contacts.</p>');
+});
 
-router.get('/', contactsController.getAll);
-router.get('/:id', contactsController.getById);
-
-module.exports = { router };
+module.exports = router;

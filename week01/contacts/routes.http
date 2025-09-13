@@ -1,14 +1,41 @@
-###
+### Get home page
 GET http://localhost:3000/ HTTP/1.1
 
-###
+### Get all contacts
 GET http://localhost:3000/contacts HTTP/1.1
 
-### 
+### Get existing contact
 GET http://localhost:3000/contacts/68bc735b8bf5b5fa470b1c0e HTTP/1.1
 
-###
+### Get existing contact
 GET http://localhost:3000/contacts/68bc74188bf5b5fa470b1c0f HTTP/1.1
 
-### 
-GET http://localhost:3000/contacts/68bc74608bf5b5fa470b1c10 HTTP/1.1
+### Get existing contact
+GET http://localhost:3000/contacts/68c4de3548e8c8ba8c8225b6 HTTP/1.1
+
+### Create contact
+POST http://localhost:3000/contacts HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "email": "janedoe@example.com",
+    "favoriteColor": "black",
+    "birthday": "08/05/1990"
+}
+
+### Update contact
+PUT http://localhost:3000/contacts/68c4d336640c66e37ce78c38 HTTP/1.1
+Content-Type: application/json  
+
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "johndoe@example.com",
+    "favoriteColor": "white",
+    "birthday": "12/31/1990"
+}
+
+### Delete contact
+DELETE http://localhost:3000/contacts/68c4e0003f1a1de0d63bf450 HTTP/1.1 

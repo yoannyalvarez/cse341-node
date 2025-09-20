@@ -272,7 +272,7 @@
       },
       "put": {
         "tags": [
-          "Customer"
+          "Customers"
         ],
         "description": "",
         "parameters": [
@@ -315,7 +315,7 @@
       },
       "delete": {
         "tags": [
-          "Customer"
+          "Customers"
         ],
         "description": "",
         "parameters": [

@@ -5,10 +5,9 @@
     "description": "API documentation",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "library-api-cse341-euh6.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http",
     "https"
   ],
   "paths": {

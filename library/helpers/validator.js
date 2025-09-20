@@ -6,7 +6,7 @@ const validatedBooks = () => {
     body('author').notEmpty().withMessage('Author name is required').isString().not().isInt().withMessage('Author name must be a string'),
     body('genre').notEmpty().withMessage('Genre is required').isString(),
     body('number_of_pages').notEmpty().withMessage('Number of pages is required').isInt().withMessage('Number of pages must be an integer'),
-    body('publication_date').notEmpty().withMessage('Publication date is required').matches(/^\d{2}\/\d{2}\/\d{4}$/).withMessage('La fecha debe tener el formato MM/DD/YYYY'),
+    body('publication_date').notEmpty().withMessage('Publication date is required').matches(/^\d{2}\/\d{2}\/\d{4}$/).withMessage('Publication date should have the following format: MM/DD/YYYY'),
     body('category').notEmpty().withMessage('Category is required').isString(),
   ]
 }

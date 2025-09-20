@@ -2,14 +2,14 @@ const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
     info: {
-        title: 'Library API',
-        description: 'A simple CRUD API to manage books and customer from the library'
+        title: 'My API',
+        description: 'API documentation',
     },
     host: 'localhost:8080',
     schemes: ['http', 'https'],
 };
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = './routes/index.js';
-
+const endpointsFiles = ['./app.js'];
 swaggerAutogen(outputFile, endpointsFiles, doc);
+

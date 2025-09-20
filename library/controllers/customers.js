@@ -47,7 +47,7 @@ const createCustomer = async (req, res) => {
 };
 
 const updateCustomer = async (req, res) => {
-    //#swagger.tags = ['Customer']
+    //#swagger.tags = ['Customers']
     const customerId = new ObjectId(req.params.id);
     const updatedCustomer = {
         firstName: req.body.firstName,
@@ -64,7 +64,7 @@ const updateCustomer = async (req, res) => {
 };
     
 const removeCustomer = async (req, res) => {
-    //#swagger.tags = ['Customer']
+    //#swagger.tags = ['Customers']
     const customerId = new ObjectId(req.params.id);
     const database = await mongodb.getDatabase();
     const result = await database.collection('customers').deleteOne({_id: customerId});

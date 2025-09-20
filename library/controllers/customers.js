@@ -5,8 +5,12 @@ const getAll = async (req, res) => {
     //#swagger.tags = ['Customers']
     const database = await mongodb.getDatabase();
     const result = await database.collection('customers').find();
-    result.toArray().then((customers) => {
-        "res.setHeader('Content-Type', 'application/json');"
+    result.toArray(err => {
+        if (err) {
+            res.status(500).json(result.error || 'Some error occurred while retrieving the customers.');
+        }
+    }).then((customers) => {
+        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(customers);
     });
 };   
@@ -16,10 +20,14 @@ const getById = async (req, res) => {
     const customerId = new ObjectId(req.params.id);
     const database = await mongodb.getDatabase();
     const result = await database.collection('customers').find({_id: customerId});
-    result.toArray().then((customer) => {
-        "res.setHeader('Content-Type', 'application/json');"
+    result.toArray(err => {
+        if (err) {
+            res.status(500).json(result.error || 'Some error occurred while retrieving the customer.');
+        }
+    }).then((customer) => {
+        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(customer[0]);
-    });
+    });  
 }; 
 
 const createCustomer = async (req, res) => {

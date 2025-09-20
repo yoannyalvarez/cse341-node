@@ -1,11 +1,17 @@
 ### Get home page
 GET http://localhost:8080/ HTTP/1.1
 
+
+
+
 ### Get all books
 GET http://localhost:8080/books HTTP/1.1
 
 ### Get all customers
 GET http://localhost:8080/customers HTTP/1.1
+
+
+
 
 
 ### Get existing book
@@ -52,7 +58,7 @@ Content-Type: application/json
 }
 
 ### Delete book
-DELETE http://localhost:8080/books/68ceb46a41c66a96bd2d3726 HTTP/1.1
+DELETE http://localhost:8080/books/68cebf2b37c484db520799d6 HTTP/1.1
 
 
 

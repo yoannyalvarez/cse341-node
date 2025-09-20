@@ -4,22 +4,28 @@ const { ObjectId } = require('mongodb');
 const getAll = async (req, res) => {
     //#swagger.tags = ['Books']
     const database = await mongodb.getDatabase();
-    const result = await database.collection('books').find();
-    result.toArray().then((books) => {
-        "res.setHeader('Content-Type', 'application/json');"
+    const result = await database.collection('books').find().toArray(err, books => {
+        if (err) {
+            res.status(500).json(result.error || 'Some error occurred while retrieving the books.');
+            return;
+        }
+        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(books);
-    });
+    });     
 };   
 
 const getById = async (req, res) => {
     //#swagger.tags = ['Books']
     const bookId = new ObjectId(req.params.id);
     const database = await mongodb.getDatabase();
-    const result = await database.collection('books').find({_id: bookId});
-    result.toArray().then((books) => {
-        "res.setHeader('Content-Type', 'application/json');"
-        res.status(200).json(books[0]);
-    });
+    const result = await database.collection('books').find({_id: bookId}).toArray(err, books => {
+        if (err) {
+            res.status(500).json(result.error || 'Some error occurred while retrieving the book.');
+            return;
+        }
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(books)[0];
+    });  
 }; 
 
 const createBook = async (req, res) => {

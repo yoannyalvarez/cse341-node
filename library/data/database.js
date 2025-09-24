@@ -6,11 +6,15 @@ let database;
 
 const initDatabase = async () => {
   if (database) return database;
-
-  const client = await MongoClient.connect(process.env.MONGODB_URI);
-  "const dbName = process.env.DB_NAME || undefined;"
-  database = client.db();
-  return database;
+  try {
+    const client = await MongoClient.connect(process.env.MONGODB_URI);
+    database = client.db();
+    console.log('Connected to MongoDB');
+    return database;
+  } catch (error) {
+    console.error('Failed to connect to MongoDB', error);
+    throw error;
+  }
 };
 
 const getDatabase = async () => {

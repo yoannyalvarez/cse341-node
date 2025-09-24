@@ -6,9 +6,9 @@ const getAll = async (req, res) => {
     const database = await mongodb.getDatabase();
     const result = await database.collection('customers').find();
     result.toArray(err => {
-        if (err) {
-            res.status(500).json(result.error || 'Some error occurred while retrieving the customers.');
-        }
+    if (err) {
+        res.status(500).json(result.error || 'Some error occurred while retrieving the customers.');
+    }
     }).then((customers) => {
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(customers);
@@ -21,9 +21,9 @@ const getById = async (req, res) => {
     const database = await mongodb.getDatabase();
     const result = await database.collection('customers').find({_id: customerId});
     result.toArray(err => {
-        if (err) {
-            res.status(500).json(result.error || 'Some error occurred while retrieving the customer.');
-        }
+    if (err) {
+        res.status(500).json(result.error || 'Some error occurred while retrieving the customer.');
+    }
     }).then((customer) => {
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(customer[0]);

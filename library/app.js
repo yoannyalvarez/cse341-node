@@ -7,6 +7,8 @@ const passport = require('passport');
 const GithubStrategy = require('passport-github2').Strategy;
 const session = require('express-session');
 const cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
 const router = require('./routes');
 const port = process.env.PORT || 8080;
 
@@ -37,8 +39,7 @@ app.use(cors({methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']}))
 app.use(cors({origin: '*'}))
 
 //#oauth
-passport.use(
-  new GithubStrategy(
+passport.use(new GithubStrategy(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,

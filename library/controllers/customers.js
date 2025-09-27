@@ -3,75 +3,95 @@ const { ObjectId } = require('mongodb');
 
 const getAll = async (req, res) => {
     //#swagger.tags = ['Customers']
-    const database = await mongodb.getDatabase();
-    const result = await database.collection('customers').find();
-    result.toArray(err => {
-    if (err) {
-        res.status(500).json(result.error || 'Some error occurred while retrieving the customers.');
+    try {
+        const database = await mongodb.getDatabase();
+        const result = await database.collection('customers').find();
+        result.toArray().then((customers) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(customers);
+        });
+    } catch (err) {
+            res.status(500).json(result.error || 'Some error occurred while retrieving the customers.');
     }
-    }).then((customers) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(customers);
-    });
+    
 };   
 
 const getById = async (req, res) => {
     //#swagger.tags = ['Customers']
-    const customerId = new ObjectId(req.params.id);
-    const database = await mongodb.getDatabase();
-    const result = await database.collection('customers').find({_id: customerId});
-    result.toArray(err => {
-    if (err) {
+    try {
+        const customerId = new ObjectId(req.params.id);
+        const database = await mongodb.getDatabase();
+        const result = await database.collection('customers').find({_id: customerId});
+        result.toArray().then((customers) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(customers[0]);
+        });
+    } catch (err) {
         res.status(500).json(result.error || 'Some error occurred while retrieving the customer.');
-    }
-    }).then((customer) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(customer[0]);
-    });  
+    }  
 }; 
 
 const createCustomer = async (req, res) => {
     //#swagger.tags = ['Customers']
     const newCustomer = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
+        tittle: req.body.tittle,
+        author: req.body.author,
+        genre: req.body.genre,
+        number_of_pages: req.body.number_of_pages,
+        publication_date: req.body.publication_date,
+        category: req.body.category
     };
-    const database = await mongodb.getDatabase();
-    const result = await database.collection('customers').insertOne(newCustomer);
-    if (result.acknowledged !== 1) {
-        res.status(201).json(result.insertedId);
-    } else {
+    try {
+        const database = await mongodb.getDatabase();
+        const result = await database.collection('customers').insertOne(newCustomer);
+        if (result.acknowledged !== 1) {
+            res.status(201).json(result.insertedId);
+        } 
+    } catch (err) {
         res.status(500).json(result.error || 'Some error occurred while creating the customer.');
     }
+
+
+ 
 };
 
 const updateCustomer = async (req, res) => {
     //#swagger.tags = ['Customers']
     const customerId = new ObjectId(req.params.id);
     const updatedCustomer = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
+        tittle: req.body.tittle,
+        author: req.body.author,
+        genre: req.body.genre,
+        number_of_pages: req.body.number_of_pages,
+        publication_date: req.body.publication_date,
+        category: req.body.category
     };
-    const database = await mongodb.getDatabase();
-    const result = await database.collection('customers').updateOne({_id: customerId}, {$set: updatedCustomer});
-    if (result.modifiedCount !== 1) {
+    try {
+        const database = await mongodb.getDatabase();
+        const result = await database.collection('customers').updateOne({_id: customerId}, {$set: updatedCustomer});
+        if (result.modifiedCount !== 1) {
+            throw err;
+        } else {
+            res.status(204).end();
+        }
+    } catch (err) {
         res.status(500).json(result.error || 'Some error occurred while updating the customer.');
-    } else {
-        res.status(204).end();
     }
 };
     
 const removeCustomer = async (req, res) => {
     //#swagger.tags = ['Customers']
-    const customerId = new ObjectId(req.params.id);
-    const database = await mongodb.getDatabase();
-    const result = await database.collection('customers').deleteOne({_id: customerId});
-    if (result.deletedCount !== 1) {
+    try {
+        const customerId = new ObjectId(req.params.id);
+        const database = await mongodb.getDatabase();
+        const result = await database.collection('customers').deleteOne({_id: customerId});
+        if (result.deletedCount !== 1) {
+            throw err;
+        } else {
+            res.status(204).end();
+        }
+    } catch (err) {
         res.status(500).json(result.error || 'Some error occurred while deleting the customer.'); 
-    } else {
-        res.status(204).end();
     }
 };
 

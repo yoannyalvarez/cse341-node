@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const auth = require('../middleware/authenticate');
 
 router.use('/', require('./swagger'));

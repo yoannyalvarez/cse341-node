@@ -51,8 +51,6 @@ app.get('/auth/github/callback',
     res.redirect('/');
   }
 );
-
-app.get('/login', passport.authenticate('github'), (req, res) => {});
 //#
 
 app.use('/', router);

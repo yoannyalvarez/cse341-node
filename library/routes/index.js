@@ -3,8 +3,24 @@ const router = express.Router();
 const auth = require('../middleware/authenticate');
 
 router.use('/', require('./swagger'));
+
 router.use('/books', require('./books'));
 router.use('/customers', require('./customers'));
+
+router.get('/login', passport.authenticate('github'), (req, res) => {});
+router.get('/logout', (req, res) => {
+    try {
+        req.logout((err) => {
+            if (err) {
+                throw err;
+            }
+            res.redirect('/');
+        })}
+     catch (err) {
+        return next(err);
+    };
+});
+
 router.get('/', auth.isAuthenticated, (req, res) => {
     //#swagger.tags = ['Welcome to the Library API']
     try {

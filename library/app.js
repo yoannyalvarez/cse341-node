@@ -33,9 +33,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(cors({methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']}))
-app.use(cors({origin: '*'}))
-
 //#oauth
 passport.use(new GithubStrategy(
     {

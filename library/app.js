@@ -6,17 +6,12 @@ const { json } = pkg;
 const passport = require('passport');
 const GithubStrategy = require('passport-github2').Strategy;
 const session = require('express-session');
+const cors = require('cors');
 const router = require('./routes');
 const port = process.env.PORT || 8080;
 
 
 app.use(json());
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization');
-    next();
-});
 
 //#OAuth
 app.use(
@@ -29,7 +24,19 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+//#
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization');
+    next();
+});
+
+app.use(cors({methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']}))
+app.use(cors({origin: '*'}))
+
+//#oauth
 passport.use(
   new GithubStrategy(
     {

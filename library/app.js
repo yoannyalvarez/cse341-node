@@ -59,10 +59,15 @@ process.on('uncaughtException', (err, origin) => {
   console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
 });
 
-mongodb.initDatabase()
-  .then(() => {
-    app.listen(port, () => console.log(`Listening on port ${port}...`));
-  })
-  .catch((err) => {
-    console.error('Failed to connect to DB', err);
-  });
+// ===============================================
+// DATABASE CONNECTION AND SERVER START
+// ===============================================
+mongodb.initDatabase((err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    app.listen(port, () => {
+      console.log(`✅ Connected to Database and listening on port ${port}`);
+    });
+  }
+});

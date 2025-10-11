@@ -1,27 +1,52 @@
-const dotenv = require('dotenv');
-dotenv.config();
+// Load environment variables from .env file
+const dotenv = require('dotenv').config({ path: './.env' });
+
+// Import MongoClient from MongoDB driver
 const { MongoClient } = require('mongodb');
 
+// Declare a variable to hold the database connection instance
 let database;
 
-const initDatabase = async () => {
-  if (database) return database;
-  try {
-    const client = await MongoClient.connect(process.env.MONGODB_URI);
-    database = client.db();
-    console.log('Connected to MongoDB');
-    return database;
-  } catch (error) {
-    console.error('Failed to connect to MongoDB', error);
-    throw error;
+/**
+ * Initializes the database connection.
+ * 
+ * - Checks if the database is already initialized (to avoid reconnecting unnecessarily)
+ * - Connects to MongoDB using the URI stored in the .env file (process.env.MONGODB_URI)
+ * - Once connected, stores the client object in the `database` variable
+ * - Calls the callback function with the database client or an error
+ */
+const initDatabase = (callback) => {
+  if (database) {
+    console.log('Database is already initialized!');
+    return callback(null, database); // Return existing connection
   }
+
+  // Attempt to connect to MongoDB
+  MongoClient.connect(process.env.MONGODB_URI)
+    .then((client) => {
+      database = client; // Save the connection instance for reuse
+      callback(null, database); // Pass the client to the callback
+    })
+    .catch((err) => {
+      callback(err); // Return connection error if failed
+    });
 };
 
-const getDatabase = async () => {
+/**
+ * Returns the existing database connection.
+ * 
+ * - Throws an error if the database has not yet been initialized
+ * - Otherwise, returns the connected client instance
+ */
+const getDatabase = () => {
   if (!database) {
-    throw new Error('Database not initialized');
+    throw Error('Database not initialized');
   }
   return database;
 };
 
-module.exports = { initDatabase, getDatabase };
+// Export the initialization and getter functions
+module.exports = { 
+  initDatabase, 
+  getDatabase 
+};

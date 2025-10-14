@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1760214431172" clover="3.2.0">
-  <project timestamp="1760214431172" name="All files">
+<coverage generated="1760404324888" clover="3.2.0">
+  <project timestamp="1760404324888" name="All files">
     <metrics statements="15" coveredstatements="9" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="2" elements="23" coveredelements="13" complexity="0" loc="15" ncloc="15" packages="1" files="1" classes="1"/>
     <file name="database.js" path="D:\BYU-Idaho\BYU-I Online\Term 5 2025 (Sep-Oct)\CSE341 - Web Services\repo\cse341-node\library\data\database.js">
       <metrics statements="15" coveredstatements="9" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="2"/>
